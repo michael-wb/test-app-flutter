@@ -1,0 +1,15 @@
+{
+  "clientAppId": "devicesync-bmqjg",
+  "query": "*",
+  "cloudSyncServerAuthSecret": "964d3b768c1e16b6a74463191ec6b1b8",
+  "hostname": "localhost",
+  "tls" : {
+    "enabled": false,
+    "certificates": [
+      {
+        "publicKeyPath": "certs/cert.pem",
+        "privateKeyPath": "certs/certkey.pem"
+      }
+    ]
+  }
+}

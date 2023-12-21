@@ -499,21 +499,21 @@ packages:
   realm:
     dependency: "direct main"
     description:
-      path: "/Users/michael.wilkersonbarker/Dev/realm-dart-lib/release-bundle-1/realm"
-      relative: false
+      path: "../flutter-update-baseurl/realm"
+      relative: true
     source: path
     version: "1.6.1-aa08922819602035b653c72d5cf5b26d42881fee"
   realm_common:
     dependency: transitive
     description:
-      path: "../realm-dart-lib/release-bundle-1/common"
+      path: "../flutter-update-baseurl/common"
       relative: true
     source: path
     version: "1.6.1-aa08922819602035b653c72d5cf5b26d42881fee"
   realm_generator:
     dependency: transitive
     description:
-      path: "../realm-dart-lib/release-bundle-1/generator"
+      path: "../flutter-update-baseurl/generator"
       relative: true
     source: path
     version: "1.6.1-aa08922819602035b653c72d5cf5b26d42881fee"
