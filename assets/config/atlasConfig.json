@@ -1,0 +1,9 @@
+{
+    "appId": "devicesync-bmqjg",
+    "appUrl": "https://realm.mongodb.com/groups/644bdf763aca4657e5be0173/apps/6512022c532a9d11e283ef3d",
+    "baseUrl": "https://realm.mongodb.com",
+    "clientApiBaseUrl": "https://us-east-1.aws.realm.mongodb.com",
+    "dataApiBaseUrl": "https://us-east-1.aws.data.mongodb-api.com",
+    "dataExplorerLink": "https://cloud.mongodb.com/links/644bdf763aca4657e5be0173/explorer/SampleData/database/collection/find",
+    "dataSourceName": "mongodb-atlas"
+}
