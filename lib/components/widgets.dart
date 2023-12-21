@@ -50,13 +50,14 @@ Widget loginButton(BuildContext context,
 Widget templateButton(BuildContext context,
     {Color color = Colors.grey,
     String text = "button",
+    Color textColor = Colors.black,
     void Function()? onPressed}) {
   return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 10),
+    margin: const EdgeInsets.symmetric(horizontal: 5),
     child: ElevatedButton(
-      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(color)),
+      style: ElevatedButton.styleFrom(backgroundColor: color, padding: const EdgeInsets.symmetric(horizontal: 20)),
       onPressed: onPressed,
-      child: Text(text),
+      child: Text(text, style: TextStyle(color: textColor)),
     ),
   );
 }
@@ -75,6 +76,7 @@ Widget okButton(BuildContext context, String text,
     context,
     color: forestGreenColor,
     text: text,
+    textColor: Colors.white,
     onPressed: onPressed,
   );
 }
@@ -84,6 +86,7 @@ Widget deleteButton(BuildContext context, {void Function()? onPressed}) {
     context,
     color: darkRedColor,
     text: "Delete",
+    textColor: Colors.white,
     onPressed: onPressed,
   );
 }
@@ -113,13 +116,15 @@ Widget styledFloatingAddButton(BuildContext context,
     {required void Function() onPressed}) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 5),
-    child: FloatingActionButton(
-      elevation: 0,
-      backgroundColor: Colors.white,
-      onPressed: onPressed,
-      tooltip: 'Add',
-      child: Padding(
-        padding: const EdgeInsets.all(3),
+    child: Material(
+      borderRadius: BorderRadius.circular(30.0),
+      elevation: 5,
+      shadowColor: Colors.black,
+      child: FloatingActionButton(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        onPressed: onPressed,
+        tooltip: 'Add',
         child: CircleAvatar(
           radius: 26,
           backgroundColor: Theme.of(context).primaryColor,

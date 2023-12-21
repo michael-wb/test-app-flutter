@@ -5,15 +5,21 @@ import 'package:flutter/material.dart';
 class RealmServices with ChangeNotifier {
   static const String queryAllName = "getAllItemsSubscription";
   static const String queryMyItemsName = "getMyItemsSubscription";
+  static const String cloudServer = "https://realm.mongodb.com";
+  static const String edgeServer = "http://172.16.101.112";
+  static const String email = "testuser4@test.com";
+  static const String password = "testpass";
 
   bool showAll = false;
   bool offlineModeOn = false;
+  bool useCloud = true;
   bool isWaiting = false;
   late Realm realm;
   User? currentUser;
   App app;
 
   RealmServices(this.app) {
+    print("RealmServices()");
     if (app.currentUser != null || currentUser != app.currentUser) {
       currentUser ??= app.currentUser;
       realm = Realm(Configuration.flexibleSync(currentUser!, [Item.schema]));
@@ -42,17 +48,49 @@ class RealmServices with ChangeNotifier {
     offlineModeOn = !offlineModeOn;
     if (offlineModeOn) {
       realm.syncSession.pause();
+      print("OFFLINE");
     } else {
       try {
         isWaiting = true;
         notifyListeners();
         realm.syncSession.resume();
         await updateSubscriptions();
+        print("ONLINE with server base url: ${app.getBaseUrl()}");
       } finally {
         isWaiting = false;
       }
     }
     notifyListeners();
+  }
+
+  Future<bool> cloudEdgeSwitch() async {
+    if (!offlineModeOn && !realm.isClosed) {
+      useCloud = !useCloud;
+      try {
+        isWaiting = true;
+        realm.syncSession.pause();
+        final serverUrl = useCloud ? cloudServer : edgeServer;
+        print("Updating base url to: $serverUrl");
+        await app.updateBaseUrl(Uri.parse(serverUrl));
+        User loggedInUser = await app.logIn(Credentials.emailPassword(email, password));
+        print("Using server base url: ${app.getBaseUrl()}");
+        if (app.currentUser == null && currentUser != loggedInUser) {
+          print("User is either null or not the same as the original user");
+          await close();
+          return false;
+        }
+        realm.syncSession.resume();
+      } catch (e) {
+        print("Error occurred while switching servers: $e");
+        await close();
+        return false;
+      } finally {
+        isWaiting = false;
+      }
+      notifyListeners();
+    }
+    print("Done switching servers");
+    return true;
   }
 
   Future<void> switchSubscription(bool value) async {

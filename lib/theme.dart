@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 
 appThemeData() {
   return ThemeData(
-          primarySwatch: forestGreenColor,
-          backgroundColor: mistColor,
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: forestGreenColor),
-          errorColor: darkRedColor)
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: forestGreenColor, backgroundColor: mistColor, errorColor: darkRedColor))
       .copyWith(
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
+    ),
+    switchTheme: SwitchThemeData(
+      trackColor: MaterialStateProperty.all<Color>(forestGreenColor),
+      thumbColor: MaterialStateProperty.all<Color>(Colors.white),
     ),
     checkboxTheme: CheckboxThemeData(
       checkColor: MaterialStateProperty.all(Colors.white),
@@ -18,7 +19,8 @@ appThemeData() {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+        backgroundColor: MaterialStateProperty.all<Color>(forestGreenColor),
+        overlayColor: MaterialStateProperty.all<Color>(Colors.lightGreen),
         textStyle: MaterialStateProperty.all<TextStyle>(
             const TextStyle(color: Colors.white)),
       ),
@@ -29,7 +31,7 @@ appThemeData() {
 headerFooterBoxDecoration(BuildContext context, bool isHeader) {
   final theme = Theme.of(context);
   return BoxDecoration(
-    color: theme.backgroundColor,
+    color: theme.colorScheme.background,
     border: Border(
         top: isHeader
             ? BorderSide.none
@@ -44,7 +46,7 @@ errorBoxDecoration(BuildContext context) {
   final theme = Theme.of(context);
   return BoxDecoration(
       border: Border.all(color: Colors.black),
-      color: theme.backgroundColor,
+      color: theme.colorScheme.background,
       borderRadius: const BorderRadius.all(Radius.circular(8)));
 }
 
@@ -52,14 +54,14 @@ infoBoxDecoration(BuildContext context) {
   final theme = Theme.of(context);
   return BoxDecoration(
       border: Border.all(color: Colors.black),
-      color: theme.backgroundColor,
+      color: theme.colorScheme.background,
       borderRadius: const BorderRadius.all(Radius.circular(8)));
 }
 
 errorTextStyle(BuildContext context, {bool bold = false}) {
   final theme = Theme.of(context);
   return TextStyle(
-      color: theme.errorColor,
+      color: theme.colorScheme.error,
       fontWeight: bold ? FontWeight.bold : FontWeight.normal);
 }
 
@@ -105,5 +107,5 @@ MaterialColor mistColor = MaterialColor(
   },
 );
 
-Color get darkRedColor => Color.fromARGB(255, 208, 18, 5);
+Color get darkRedColor => const Color.fromARGB(255, 208, 18, 5);
 Color get lightRedColor => const Color.fromARGB(255, 244, 223, 221);

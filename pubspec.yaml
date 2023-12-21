@@ -13,7 +13,9 @@ dependencies:
     sdk: flutter
 
   provider: ^6.0.0
-  realm: ^1.4.0
+  # realm: ^1.4.0
+  realm:
+    path: ../realm-dart-lib/release-bundle-1/realm
   path_provider: ^2.0.10
   url_launcher: ^6.1.12
 

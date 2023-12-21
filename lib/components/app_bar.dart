@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_todo/realm/realm_services.dart';
 
 class TodoAppBar extends StatelessWidget implements PreferredSizeWidget {
-  TodoAppBar({Key? key}) : super(key: key);
+  const TodoAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +15,13 @@ class TodoAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: const Text('Realm Flutter To-Do'),
       automaticallyImplyLeading: false,
       actions: <Widget>[
+        IconButton(
+          icon: Icon(realmServices.useCloud
+              ? Icons.cloud_circle
+              : Icons.cloud_circle_outlined),
+          tooltip: 'Switch Edge/Cloud Connection',
+          onPressed: realmServices.offlineModeOn ? null : () async => await switchServer(context, realmServices),
+        ),
         IconButton(
           icon: Icon(realmServices.offlineModeOn
               ? Icons.wifi_off_rounded
@@ -36,6 +43,12 @@ class TodoAppBar extends StatelessWidget implements PreferredSizeWidget {
     appServices.logOut();
     await realmServices.close();
     Navigator.pushNamed(context, '/login');
+  }
+
+  Future<void> switchServer(BuildContext context, RealmServices realmServices) async {
+    if (!await realmServices.cloudEdgeSwitch()) {
+      Navigator.pushNamed(context, '/login');
+    }
   }
 
   @override

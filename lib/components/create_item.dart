@@ -12,7 +12,7 @@ class CreateItemAction extends StatelessWidget {
         onPressed: () => showModalBottomSheet(
               isScrollControlled: true,
               context: context,
-              builder: (_) => Wrap(children: const [CreateItemForm()]),
+              builder: (_) => const Wrap(children: [CreateItemForm()]),
             ));
   }
 }
@@ -51,9 +51,11 @@ class _CreateItemFormState extends State<CreateItemForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text("Create a new item", style: theme.headline6),
+              Text("Create a new item", style: theme.titleLarge),
               TextFormField(
                 controller: _itemEditingController,
+                decoration: const InputDecoration(
+                    hintText: "Enter item text"),
                 validator: (value) => (value ?? "").isEmpty ? "Please enter some text" : null,
               ),
               Padding(

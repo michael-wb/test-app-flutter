@@ -36,20 +36,21 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final String atlasUrl =
         Provider.of<Config>(context, listen: false).atlasUrl;
-    print("To see your data in Atlas, follow this link:$atlasUrl");
+    print("To see your data in Atlas, follow this link: $atlasUrl");
 
     final currentUser =
         Provider.of<RealmServices?>(context, listen: false)?.currentUser;
 
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {},
       child: MaterialApp(
         title: 'Realm Flutter Todo',
         theme: appThemeData(),
         initialRoute: currentUser != null ? '/' : '/login',
         routes: {
           '/': (context) => const HomePage(),
-          '/login': (context) => LogIn()
+          '/login': (context) => const LogIn(),
         },
       ),
     );
